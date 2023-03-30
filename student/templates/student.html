@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'title' %}
+    <title>Student</title>
+    <link rel="stylesheet" href="{% static 'Student/student.css' %}">
+{% endblock %}
+<body>
+
+    {% block 'content' %}
+
+        <!-- overlay-control du page -->
+
+        <div class="overlay-container hidden">
+            <div class="overlay-student">
+            </div>
+        
+            <div class="pop-form">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="valeur" value="add">
+                    <h1>Nouveau etudiant !</h1>
+                    <div class="fullname">
+                        <div class="form-control">
+                            <input type="text" placeholder="Nom..." name="nom" autofocus>
+                            <p class="alert">Nom d'etudiant requis</p>
+                        </div>
+                        <div class="form-control">
+                            <input type="text" placeholder="Prenom..." name="prenom">
+                            <p class="alert">Nom d'etudiant requis</p>
+                        </div>
+                    </div>
+                    <div class="form-control">
+                        <input type="date" placeholder="date de naissance..." name="birthday">
+                    </div>
+                    <div class="form-control">
+                        <input type="text" placeholder="Lieu de naissance..." name="lieuNaissance">
+                        <p class="alert">Lieu de naissance requis</p>
+                    </div>
+                    <div class="option form-control">
+                        <input type="text" placeholder="Adresse..." name="adresse">
+                        <p class="alert">Adresse requis</p>
+                    </div>
+                    <div class="form-control">
+                        <select name="mention">
+                            <option value="rpm">RPM</option>
+                            <option value="daii">DAII</option>
+                            <option value="aes">AES</option>
+                        </select>
+                    </div>
+                    <div class="form-control">
+                        <input type="text" name="niveau" placeholder="niveau...">
+                    </div>
+                    <div class="image-student">
+                        <input type="file" name="image-student">
+                        <div class="affiche-image"></div>
+                    </div>
+                    <div class="save-student">
+                        <button type="submit">Enregistrer</button>
+                    </div>
+                </form>
+            </div>
+            </div>
+        
+            <div class="del-container hidden">
+                <div class="del-overlay"></div>
+                <div class="del">
+                    <h2>Etes vous sur de vouloir le supprime ?</h2>
+                    <div class="choise-del">
+                        <a href="#"class="cancel">Annuler</a>
+                        <a href="#">Supprimer</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="upd-container">
+                <div class="upd-overlay"></div>
+
+            </div>
+
+            <!-- end of overlay -->
+        <div id="container-search">
+            <form method="POST">
+                {% csrf_token %}
+                <div id="search-student">
+                    <div class="search-control">
+                        <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        <input type="text" placeholder="cherche ici..." name="search" autofocus>
+                    </div>
+                    <div class="filter-option">
+                        <select name="filiere">
+                            <option value="RPM">RPM</option>
+                            <option value="DAII">DA2I</option>
+                            <option value="AES">AES</option>
+                        </select>
+                    </div>
+                    <input type="hidden" name="valeur" value="chercher">
+                </div>
+            </form>
+        </div>
+        <div id="add-student">
+            <button>+ Ajouter un etudiant</button>
+        </div>
+
+        <div id="card-container">
+            <div class="overlay-change hidden"></div>
+            {% for student in students %}
+
+                <div class="card-student">
+                    <div class="card-image" style="background-image: url('{{student.photoEtudiant.url}}');background-size: cover; background-position: center;"></div>
+                    <div class="info-student">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="identifiant" value="{{student.id}}">
+                            <input type="text" name="username" value="{{ student.nom }}">
+                            <input type="text" name="prename" value="{{ student.prenom }}">
+                            <input type="date" name="birth" value="{{ student.date_naissance }}">
+                            <input type="text" name="lieuDeNaissance" value="{{ student.lieu_naissance }}">
+                            <input type="text" name="adresseChange" value="{{ student.adresse}}">
+                            <select name="filiereCHange">
+                                <option value="rpm" {% if student.mention == 'RPM' %}selected{% endif %}>RPM</option>
+                                <option value="daii" {% if student.mention == 'DAII' %}selected{% endif %}>DAII</option>
+                                <option value="aes"{% if student.mention == 'AES' %}selected{% endif %}>AES</option>
+                            </select>
+                            <input type="text" name="niveauChange" value="{{student.niveau}}">
+                            <div class="del-or-upd">
+                                <a href="#" id="{{student.id}}" class="delete"><i class="fa-solid fa-trash"></i></a>
+                                <a href="#" id="btn-update">U</a>
+                                <button type="submit" class="updated hidden">save</button>
+                            </div>
+                            <input type="hidden" name="valeur" value="modifier">
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+    {% endblock %}
+
+    {% block 'footer' %}
+    <script src="{% static 'Student/student.js' %}"></script>
+    {% endblock %}
+</body>
+</html>

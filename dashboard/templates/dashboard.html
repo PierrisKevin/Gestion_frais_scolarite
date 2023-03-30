@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block 'title' %}
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{% static 'dashboard/dash.css' %}">
+{% endblock %}
+
+{% block 'content' %}
+
+<div id="chart-container">
+    <div class="chart-school">
+        <canvas id="chart" aria-label="chart" role="img"></canvas>
+    </div>
+    <div class="info-chart">
+        <h2>Graphe de Frais Scolaire</h2>
+        <div class="second-chart">
+            <canvas id="second"></canvas>
+        </div>
+    </div>
+</div>
+<div id="info-business">
+    <div class="student-number">
+        <p>Nombre des etudiant</p>
+        <p>{{nbStudent}}</p>
+        <img src="{% static '/image/student.png' %}">
+    </div>
+    <div class="total">
+        <p>Nombre de non complet</p>
+        <p class="total-student">{{manque}}</p>
+    </div>
+    <div class="total-somme">
+        <p>Total de revenu en Ariary</p>
+        <p>{{revenu}}</p>
+        <img src="{% static '/image/money.png' %}">
+    </div>
+</div>
+</div>
+
+{% endblock %}
+
+{% block 'footer' %}
+    <script src="{% static 'dashboard/js/chart.js' %}"></script>
+    <script type="text/JavaScript">
+        const chartSchool = document.getElementById("chart")
+        const barChart = new Chart(chartSchool,{
+            type:"bar",
+            data:{
+                labels :["Aucun", "Un Tranche", "Total"],
+                datasets : [{
+                data : {{ statistique }},
+                backgroundColor : ["#da0000", "orange", "#09be70"],
+            }]
+        },
+            options : {
+            scales : {
+                y:{
+                suggestedMax : 100,
+                }
+            }
+        }
+        })
+
+const secondChart = document.querySelector("#second")
+const secondBar = new Chart(secondChart,{
+    type:"doughnut",
+    data:{
+        labels :["RIen payer", "Un Tranche", "Total"],
+        datasets : [{
+            data : {{statistique}},
+            backgroundColor : ["#da0000", "orange", "#09be70"],
+            offset: true,
+        }]
+    },
+    options : {
+        scales : {
+            y:{
+                suggestedMax : 360,
+            }
+        }
+    }
+})
+    </script>
+
+{% endblock %}

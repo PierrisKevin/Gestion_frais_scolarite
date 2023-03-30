@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static '/sideBar/side-bars.css' %}">
+    <link rel="stylesheet" href="{% static '/ico/all.min.css'%}">
+    <link rel="stylesheet" href="{% static '/ico/fontawesome.min.css' %}">
+    {% block 'title' %}
+    <title>SideBars</title>
+    {% endblock %}
+</head>
+<body>
+    <nav id="side-bar">
+        <div class="side-bar-container">
+            <div class="logo-bars">
+                <img src="{% static '/image/Logo-EMIT.png' %}">
+            </div>
+            <div class="menu-bars">
+                <div class="choise {% if active == 'dash' %}active{% endif %}">
+                    <a href="{% url 'dashboard' %}"><i class="fa-solid fa-line-chart"></i> <span class="text-choise">Dashboard</span></a>
+                </div>
+                <div class="choise {% if active == 'student' %}active{% endif %}">
+                    <a href="{% url 'student' %}"><i class="fa-solid fa-graduation-cap"></i> <span class="text-choise">Student</span></a>
+                </div>
+                <div class="choise {% if active == 'payment' %}active{% endif %}">
+                    <a href="{% url 'payment' %}"><i class="fa-solid fa-money-bill"></i> <span class="text-choise">Payment</span></a>
+                </div>
+                <div class="choise {% if active == 'theme' %}active{% endif %}">
+                    <a href="#"><i class="fa-solid fa-user"></i> <span class="text-choise">Administrateur</span></a>
+                </div>
+                
+            </div>
+            <div class="logout-bars">
+                <div class="user-name">
+                    <div class="logout-btn hidden">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <a href="{% url 'disconnect' %}">Deconnecter</a>
+                    </div>
+                    <div class="profil-connected">
+                        {% block 'images' %}
+                        <img src="./image/univ-fianar.png">
+                        {% endblock %}
+                        <div class="admin-name">
+
+                            <p>Nom Administrator</p>
+                            <p>Prenom Administrator</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div id="container">
+        {% block 'content'%}
+
+        {% endblock %}
+    </div>
+
+    <script>
+        document.querySelector(".profil-connected").addEventListener("click", ()=>{
+            document.querySelector(".logout-btn").classList.toggle("hidden")
+        })
+    </script>
+    {% block 'footer' %}
+    {% endblock %}
+</body>
+</html>

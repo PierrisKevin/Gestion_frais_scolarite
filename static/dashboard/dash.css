@@ -1,0 +1,87 @@
+:root{
+    --primary : #5360f6;
+    --second : #00a2ff;
+    --primary2 : #2072a5;
+    --primary3: #2d83b6;
+    --white : #fefefe;
+    --text : #949498;
+    --gris : #ededf5;
+    --gris-text: #30333b;
+
+}
+*, body{
+    margin :0;
+    padding : 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+#container{
+    display: inline-block;
+    position: relative;
+    padding : 10px;
+    float :right;
+    width: 80%;
+    height: 100vh;
+}
+#chart-container{
+    display: flex;
+    gap : 10px;
+    height: 65vh;
+    border-radius: 5px;
+    background: #fff;
+    box-shadow: 10px 10px 20px rgba(0,0,0,.1);
+    overflow: hidden;
+}
+#chart-container .chart-school{
+    width : 70%;
+}
+#chart-container .chart-school canvas{
+    height: 100%;
+}
+#chart-container .info-chart{
+    width : 30%;
+    /* background: var(--second); */
+}
+#chart-container .info-chart h2{
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 1.2em;
+    margin-top: 10px;
+    color:var(--primary3);
+}
+#chart-container .info-chart .second-chart{
+    position: relative;
+    top:40px;
+    width : 100%;
+    height : 60%;
+}
+
+#info-business{
+    display: flex;
+    margin: 20px 0;
+    height: 30vh;
+    gap : 15px;
+}
+#info-business div{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap : 15px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    width: 40%;
+    height: 100%;
+    color: var(--white);
+    background: var(--primary2);
+}
+#info-business div img{
+    position: absolute;
+    bottom : 0;
+    left: 5px;
+    height : 50px;
+}
+#info-business div p:nth-child(2){
+    font-size: 2em;
+    font-weight: bold;
+}

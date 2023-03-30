@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block 'title' %}
+    <title>Paiment</title>
+    <link rel="stylesheet" href="{% static 'payement/payment.css' %}">
+{% endblock %}
+
+{% block 'content' %}
+<h1>aaaaaaaaaaaa runnnn</h1>
+        <div id="container-search">
+            <form method="POST">
+                {% csrf_token %}
+                <div id="search-student">
+                    <div class="search-control">
+                        <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        <input type="text" placeholder="cherche ici..." name="search" autofocus>
+                    </div>
+                    <div class="filter-option">
+                        <select name="filiere">
+                            <option value="rpm">RPM</option>
+                            <option value="daii">DA2I</option>
+                            <option value="aes">AES</option>
+                        </select>
+                    </div>
+                    <input type="hidden" name="valeur" value="chercher">
+                </div>
+            </form>
+
+            <div id="pay-contain">
+                {% for pay in allpay %}
+                <div class="payment-list">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="valeur" value="update">
+                        <input type="hidden" name="identiiant" value="2">
+                        <img src="{{pay.student_pay.photoEtudiant.url}}">
+                        <div class="informations">
+                            <p>{{pay.student_pay.nom}}</p>
+                            <p>{{pay.student_pay.prenom}}</p>
+                        </div>
+                        <div class="pay-doied">
+                            <div class="form-control">
+                                <input type="checkbox" name="premier" id="primo">
+                                <label for="primo"><span class="indicator"></span> Premier tranche</label>
+                            </div>
+                            <div class="form-control">
+                                <input type="checkbox" name="deuxieme" id="deuxio">
+                                <label for="deuxio"><span class="indicator"></span> Deuxieme tranche</label>
+                            </div>
+                        </div>
+                        <div class="options">
+                            <button type="submit" class="hidden">OK</button>
+                            <a hre="#">Edit</a>
+                        </div>
+                    </form>
+                    
+                </div>
+                {% endfor %}
+                
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block 'footer' %}
+    <script>
+        document.querySelectorAll("input").forEach((inpt)=>{
+            inpt.disabled = true
+        })
+        const updates = document.querySelectorAll(".options a")
+        let change = true
+        updates.forEach((update)=>{
+
+            update.addEventListener("click", (e)=>{
+                console.log(e.target.parentNode.parentNode.childNodes[9].childNodes[1].childNodes[1])
+                let primo = e.target.parentNode.parentNode.childNodes[9].childNodes[1].childNodes[1]
+                let secondo = e.target.parentNode.parentNode.childNodes[9].childNodes[3].childNodes[1]
+                if (change){
+                    e.target.textContent = "x"
+                    e.target.style.background = "red"
+
+                }
+                else{
+                    e.target.textContent = "Edit"
+                    e.target.style.background = "#00c857"
+                }
+                let submitBtn = e.target.parentNode.childNodes[1]
+                submitBtn.classList.toggle("hidden")
+                primo.disabled = (change) ? false : true
+                secondo.disabled = (change) ? false : true
+                change = (change) ? false : true
+            })
+        })
+    </script>
+{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login EMIT</title>
+    <link rel="stylesheet" href="{% static '/login.css' %}">
+    <link rel="stylesheet" href="{% static '/ico/all.min.css'%}">
+    <link rel="stylesheet" href="{% static '/ico/fontawesome.min.css' %}">
+</head>
+<body>
+    <div id="form-container">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="logo">
+                <img src="{% static '/image/Logo-EMIT.png' %}">
+            </div>
+            <div class="form-control">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" name="username" placeholder="Votre nom">
+                <span></span>
+                <p class="alert">Nom d'utlisateur non acceptable</p>
+            </div>
+            <div class="form-control">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" name="password" placeholder="mot de passe">
+                <span class="show"></span>
+                <p class="alert">Mot de passe non valider...</p>
+            </div>
+            <div class="login">
+                <button type="submit" class="">Connexion</button>
+            </div>
+            
+        </form>
+    </div>
+
+    <script src="{% static './login.js' %}"></script>
+</body>
+</html>
